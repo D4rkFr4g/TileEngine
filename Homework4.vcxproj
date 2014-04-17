@@ -18,6 +18,8 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawUtils.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="PlayerSprite.cpp" />
@@ -42,6 +44,8 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawUtils.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="PlayerSprite.h" />
     <ClInclude Include="Sprite.h" />
