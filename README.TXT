@@ -1,10 +1,9 @@
 PROJECT TITLE: TileEngine
 PURPOSE OF PROJECT: Creating a reusable 2D Tile Engine for building games
 VERSION or DATE: 2/17/2014
-HOW TO START THIS PROJECT: 
+HOW TO START THIS PROJECT: Unzip EXE files folder and open TileEngine.exe
 AUTHORS: Zane Melcho
 USER INSTRUCTIONS:
-
 
 WASD - Controls Movement
 Direction Keys - Camera scrolling
