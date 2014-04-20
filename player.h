@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <GL/glew.h>
 #include "PlayerSprite.h"
+
 class player
 {
 public:

@@ -1,7 +1,7 @@
+#pragma once
 #include "Sprite.h"
 #include <vector>
 
-#pragma once
 class TileLevel
 {
 public:

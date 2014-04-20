@@ -8,7 +8,7 @@ AABB::AABB(void)
 	w = 0;
 	h = 0;
 }
-
+/*-----------------------------------------------*/
 AABB::AABB(int x_, int y_, int w_, int h_)
 {
 	x = x_;
@@ -16,12 +16,11 @@ AABB::AABB(int x_, int y_, int w_, int h_)
 	w = w_;
 	h = h_;
 }
-
-
+/*-----------------------------------------------*/
 AABB::~AABB(void)
 {
 }
-
+/*-----------------------------------------------*/
 bool AABB::AABBIntersect(AABB* box)
 {
 	/* PURPOSE:		Checks if this box intersects with another box 
@@ -45,7 +44,7 @@ bool AABB::AABBIntersect(AABB* box)
 	
 	return true;
 }
-
+/*-----------------------------------------------*/
 bool* AABB::AABBwhichSideIntersected(AABB* prevBox1, AABB* currBox1, AABB* box2)
 {
 	/* PURPOSE:		Checks which sides of box were collided with 

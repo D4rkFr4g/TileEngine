@@ -96,7 +96,7 @@ GLuint glTexImageTGAFile( const char* filename, int* outWidth, int* outHeight )
    }
    return tex;
 }
-
+/*-----------------------------------------------*/
 // Draw the sprite
 void glDrawSprite( GLuint tex, int x, int y, int w, int h )
 {
@@ -115,7 +115,7 @@ void glDrawSprite( GLuint tex, int x, int y, int w, int h )
    }
    glEnd();
 }
-
+/*-----------------------------------------------*/
 void glDrawSprite( GLuint tex, int x, int y, int w, int h, GLfloat tu, GLfloat tv, GLfloat tSizeX, GLfloat tSizeY )
 {
 	/* PURPOSE:		Draws a textured sprite based on uv coordinates of texture
@@ -147,7 +147,7 @@ void glDrawSprite( GLuint tex, int x, int y, int w, int h, GLfloat tu, GLfloat t
    }
    glEnd();
 }
-
+/*-----------------------------------------------*/
 void glDrawCollider(int x, int y, int w, int h, std::vector<float> color)
 {
 	/* PURPOSE:		Draws a rectangle representing a collider box 

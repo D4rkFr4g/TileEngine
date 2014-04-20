@@ -12,14 +12,13 @@ EventQueue::~EventQueue(void)
 /*-----------------------------------------------*/
 void EventQueue::queueEvent(Event* ev)
 {
-   eventQueue.push_back(*ev);
+   eventQueue.push_back(ev);
 }
 /*-----------------------------------------------*/
 void EventQueue::updateEventQueue(void)
 {
-   int i;
-   for( i = 0; i < eventQueue.size(); ++i ) 
-      handleEvent( &eventQueue[i]);
+   for( int i = 0; i < eventQueue.size(); ++i ) 
+      handleEvent(eventQueue[i]);
    
    eventQueue.clear();
 }

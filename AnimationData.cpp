@@ -1,10 +1,9 @@
 #include "AnimationData.h"
 
-
 AnimationData::AnimationData(void)
 {
 }
-
+/*-----------------------------------------------*/
 AnimationData::AnimationData(Animation def, int timeToNextFrame, bool isRepeating)
 {
 	this->def = def;
@@ -13,11 +12,11 @@ AnimationData::AnimationData(Animation def, int timeToNextFrame, bool isRepeatin
 	this->currentFrame = 0;
 	this->isRepeating = isRepeating;
 }
-
+/*-----------------------------------------------*/
 AnimationData::~AnimationData(void)
 {
 }
-
+/*-----------------------------------------------*/
 void AnimationData::resetElapsedTime()
 {
 	/* PURPOSE:		Reset the elapsed time counter 
@@ -28,7 +27,7 @@ void AnimationData::resetElapsedTime()
 
 	elapsedTime = 0;
 }
-
+/*-----------------------------------------------*/
 void AnimationData::updateTime(int ms)
 {
 	/* PURPOSE:		Update counters used for animation timing 
@@ -45,7 +44,7 @@ void AnimationData::updateTime(int ms)
 		advanceFrame();
 	}
 }
-
+/*-----------------------------------------------*/
 void AnimationData::advanceFrame()
 {
 	/* PURPOSE:		Updates current frame of animation 

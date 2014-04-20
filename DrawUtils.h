@@ -1,6 +1,5 @@
 #include <vector>
 
-
 // Load a file into an OpenGL texture, and return that texture.
 GLuint glTexImageTGAFile( const char* filename, int* outWidth, int* outHeight );
 

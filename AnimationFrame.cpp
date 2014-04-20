@@ -4,7 +4,7 @@
 AnimationFrame::AnimationFrame(void)
 {
 }
-
+/*-----------------------------------------------*/
 AnimationFrame::AnimationFrame(float tu, float tv, float tWidth, float tHeight)
 {
 	this->tu = tu;
@@ -12,8 +12,7 @@ AnimationFrame::AnimationFrame(float tu, float tv, float tWidth, float tHeight)
 	this->tWidth = tWidth;
 	this->tHeight = tHeight;
 }
-
-
+/*-----------------------------------------------*/
 AnimationFrame::~AnimationFrame(void)
 {
 }

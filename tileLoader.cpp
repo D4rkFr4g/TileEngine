@@ -1,5 +1,6 @@
 #include "tileLoader.h"
 
+
 void tileLoader::loadTiles(const char* filename, TileLevel *level)
 {
 	/* PURPOSE:		Loads tile layout from flare.txt file

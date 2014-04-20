@@ -1,3 +1,4 @@
+#pragma once
 #include<GL/glew.h>
 #include <iostream>
 #include <fstream>
@@ -6,7 +7,6 @@
 #include "Sprite.h"
 #include "TileLevel.h"
 
-#pragma once
 class tileLoader
 {
 public:
