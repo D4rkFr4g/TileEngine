@@ -1,3 +1,14 @@
+/****************************************************** 
+* Copyright (c):   2014, All Rights Reserved. 
+* Project:         TileEngine 
+* File:            main.cpp 
+* Purpose:         Create a dynamic tile engine using SDL and OpenGL 
+* Start date:      2/17/2014 
+* Programmer:      Zane Melcho 
+* 
+****************************************************** 
+*/
+
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_timer.h>
