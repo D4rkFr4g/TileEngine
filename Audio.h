@@ -9,10 +9,10 @@ class Audio : public EventListener
 {
 public:
    Audio();
-   Audio(FMOD::System* fmodSystem, FMOD::ChannelGroup* channelMusic, FMOD::ChannelGroup* channelEffects, EventQueue* eventQueue);
+   Audio(FMOD::System* fmodSystem, FMOD::ChannelGroup* channelMusic, FMOD::ChannelGroup* channelEffects);
    ~Audio(void);
    virtual void notify(Event* event) override;
-   void registerListeners(EventQueue* eventQueue, EventListener* self);
+   void registerListeners(EventQueue* eventQueue);
 
    // Variables
    FMOD_RESULT result;
@@ -20,8 +20,5 @@ public:
    FMOD::ChannelGroup* channelMusic;
    FMOD::ChannelGroup* channelEffects;
    FMOD::Sound* bgMusic[1];
-
-private:
-   EventListener* self;
 };
 

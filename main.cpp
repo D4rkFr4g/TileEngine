@@ -125,8 +125,8 @@ static void initAudio()
    fmodSystem->createChannelGroup(NULL, &channelMusic);
    fmodSystem->createChannelGroup(NULL, &channelEffects);
 
-   g_audio = Audio(fmodSystem, channelMusic, channelEffects, &eventQueue);
-   g_audio.registerListeners(&eventQueue, &g_audio);
+   g_audio = Audio(fmodSystem, channelMusic, channelEffects);
+   g_audio.registerListeners(&eventQueue);
 }
 /*-----------------------------------------------*/
 static int whichBucket(int x, int y)

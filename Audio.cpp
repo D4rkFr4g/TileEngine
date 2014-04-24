@@ -1,4 +1,5 @@
 #include "Audio.h"
+#include <iostream>
 
 using namespace FMOD;
 
@@ -7,7 +8,7 @@ Audio::Audio()
 {
 }
 /*-----------------------------------------------*/
-Audio::Audio(System* fmodSystem, ChannelGroup* channelMusic, ChannelGroup* channelEffects, EventQueue* eventQueue)
+Audio::Audio(System* fmodSystem, ChannelGroup* channelMusic, ChannelGroup* channelEffects)
 {
    this->fmodSystem = fmodSystem;
    this->channelMusic = channelMusic;
@@ -31,9 +32,8 @@ void Audio::notify(Event* event)
    }
 }
 /*-----------------------------------------------*/
-void Audio::registerListeners(EventQueue* eventQueue, EventListener* self)
+void Audio::registerListeners(EventQueue* eventQueue)
 {
-   this->self = self;
-   eventQueue->addEventListener(Event::ET_LEVEL_BEGIN, self);
+   eventQueue->addEventListener(Event::ET_LEVEL_BEGIN, this);
 }
 /*-----------------------------------------------*/
