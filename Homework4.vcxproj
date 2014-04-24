@@ -46,6 +46,7 @@
     <ClInclude Include="DrawUtils.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventQueue.h" />
+    <ClInclude Include="EventListener.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="PlayerSprite.h" />
     <ClInclude Include="Sprite.h" />

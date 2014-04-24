@@ -1,8 +1,11 @@
 #pragma once
 #include <vector>
 #include <unordered_map>
-//#include <functional>
+#include <functional>
+#include <algorithm>
 #include "Event.h"
+#include "EventListener.h"
+
 
 class EventQueue
 {
@@ -14,12 +17,13 @@ public:
    // Functions
    void queueEvent(Event*);
    void updateEventQueue(void);
-   void handleEvent(Event*);
-   //void addListener(Event::EventType, std::function<void(Event*)> callback);
+   void notifyListeners(Event*);
+   void addEventListener(Event::EventType, EventListener* listener);
+   void removeEventListener(EventListener* listener);
 
 private:
    // Variables
    std::vector<Event*> eventQueue;
-   //std::unordered_map<int, std::vector<std::function<void(Event*)>>> listeners;
+   std::unordered_map<Event::EventType, std::vector<EventListener*>> listeners;
 };
 
