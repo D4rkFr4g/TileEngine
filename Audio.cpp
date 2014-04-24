@@ -14,7 +14,6 @@ Audio::Audio(System* fmodSystem, ChannelGroup* channelMusic, ChannelGroup* chann
    this->channelEffects = channelEffects;
 
    result = fmodSystem->createSound("Audio/bgmusic.mp3", FMOD_DEFAULT, 0, &bgMusic[0]);
-   //registerListeners(eventQueue);
 }
 /*-----------------------------------------------*/
 Audio::~Audio(void)
@@ -32,9 +31,9 @@ void Audio::notify(Event* event)
    }
 }
 /*-----------------------------------------------*/
-void Audio::registerListeners(EventQueue* eventQueue)
+void Audio::registerListeners(EventQueue* eventQueue, EventListener* self)
 {
-   //EventListener eL = &this;
-   eventQueue->addEventListener(Event::ET_LEVEL_BEGIN, (EventListener*)this);
+   this->self = self;
+   eventQueue->addEventListener(Event::ET_LEVEL_BEGIN, self);
 }
 /*-----------------------------------------------*/

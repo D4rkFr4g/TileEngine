@@ -126,6 +126,7 @@ static void initAudio()
    fmodSystem->createChannelGroup(NULL, &channelEffects);
 
    g_audio = Audio(fmodSystem, channelMusic, channelEffects, &eventQueue);
+   g_audio.registerListeners(&eventQueue, &g_audio);
 }
 /*-----------------------------------------------*/
 static int whichBucket(int x, int y)
@@ -458,10 +459,8 @@ static void loadLevel()
 		}
 	}
    
-   //Event ev = Event(Event::ET_LEVEL_BEGIN);
    Event ev = Event(Event::ET_LEVEL_BEGIN, "level", 1);
    eventQueue.queueEvent(ev);
-   eventQueue.addEventListener(Event::ET_LEVEL_BEGIN, &g_audio);
 }
 /*-----------------------------------------------*/
 static void clearBackground()

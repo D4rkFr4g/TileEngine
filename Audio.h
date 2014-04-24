@@ -12,6 +12,7 @@ public:
    Audio(FMOD::System* fmodSystem, FMOD::ChannelGroup* channelMusic, FMOD::ChannelGroup* channelEffects, EventQueue* eventQueue);
    ~Audio(void);
    virtual void notify(Event* event) override;
+   void registerListeners(EventQueue* eventQueue, EventListener* self);
 
    // Variables
    FMOD_RESULT result;
@@ -21,6 +22,6 @@ public:
    FMOD::Sound* bgMusic[1];
 
 private:
-   void registerListeners(EventQueue* eventQueue);
+   EventListener* self;
 };
 
