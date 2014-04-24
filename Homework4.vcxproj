@@ -16,6 +16,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationData.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawUtils.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -42,11 +43,13 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationData.h" />
     <ClInclude Include="AnimationFrame.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawUtils.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="EventListener.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="PlayerSprite.h" />
     <ClInclude Include="Sprite.h" />
@@ -78,8 +81,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\glew-1.10.0\include;C:\SDL2-2.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SDL2-2.0.1\lib\x86;C:\glew-1.10.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\glew-1.10.0\include;C:\SDL2-2.0.1\include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2-2.0.1\lib\x86;C:\glew-1.10.0\lib\Release\Win32;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -97,8 +100,11 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;opengl32.lib;glu32.lib;glew32.lib;fmodstudio_vc.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y “C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\fmodstudio.dll” “$(OutputPath)”</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

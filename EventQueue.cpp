@@ -18,9 +18,15 @@ EventQueue::EventQueue(void)
 /*-----------------------------------------------*/
 EventQueue::~EventQueue(void)
 {
+   eventQueue.clear();
+   
+   /*unordered_map<Event::EventType, std::vector<EventListener*>>::iterator itr;
+   for (itr = listeners.begin(); itr != listeners.end(); itr++)
+      itr->second.clear();
+   listeners.erase(listeners.begin(), listeners.end());*/
 }
 /*-----------------------------------------------*/
-void EventQueue::queueEvent(Event* ev)
+void EventQueue::queueEvent(Event ev)
 {
    /* PURPOSE:		Adds event to the queue to be processed later 
 		RECEIVES:	ev - Event object to be processed
@@ -40,7 +46,7 @@ void EventQueue::updateEventQueue(void)
 	*/
 
    for( int i = 0; i < eventQueue.size(); i++ ) 
-      notifyListeners(eventQueue[i]);
+      notifyListeners(&eventQueue[i]);
    
    eventQueue.clear();
 }

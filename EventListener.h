@@ -9,6 +9,5 @@ public:
    virtual void notify(Event* event) = 0;
 
 protected:
-   EventListener(void);
+   EventListener(void){};
 };
-

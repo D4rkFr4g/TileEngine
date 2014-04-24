@@ -9,65 +9,7 @@
 ****************************************************** 
 */
 
-#define SDL_MAIN_HANDLED
-#include <SDL.h>
-#include <SDL_timer.h>
-#include <GL/glew.h>
-#include <stdio.h>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <time.h>
-#include <map>
-#include "DrawUtils.h"
-#include "Sprite.h"
-#include "AnimatedSprite.h"
-#include "PlayerSprite.h"
-#include "Camera.h"
-#include "TileLevel.h"
-#include "tileLoader.h"
-#include "player.h"
-
-using namespace std;
-
-// Forward Declarations
-static void keyboard();
-static void clearBackground();
-static void makeChicken();
-static float getSpeed();
-
-// Constants
-const int camSpeed = 10;
-const int g_numOfLevels = 1;
-const int spriteSize = 64;
-const int spriteReserve = 50000;
-const int initialChickens = 20;
-const int chickenSpeed = 50;
-const unsigned char* kbState = NULL;
-const int g_numOfCheckBuckets = 9; 
-
-// Global Variables
-SDL_Window* g_window;
-float color[] = {0,0,0};
-float currentDirection = 1;
-int g_windowWidth = 640;
-int g_windowOriginalWidth;
-int g_windowHeight = 480;
-int g_windowOriginalHeight;
-int g_windowMaxWidth = 0;
-int g_windowMaxHeight = 0;
-Camera g_cam;
-int g_currentLevel = 0;
-TileLevel g_level[g_numOfLevels];
-std::vector<std::vector<AnimatedSprite>> g_spriteBuckets;
-int* g_checkBuckets;
-GLuint spriteTexture;
-GLuint playerTexture;
-unsigned char kbPrevState[SDL_NUM_SCANCODES] = {0};
-bool shouldExit = false;
-PlayerSprite g_player;
-// End Variables
+#include "main.h"
 
 using namespace std;
 
@@ -157,6 +99,33 @@ static void initCamera()
 	g_cam.updateResolution(g_windowWidth, g_windowHeight);
 
 	g_cam.isFollowing = true;
+}
+/*-----------------------------------------------*/
+static void initAudio()
+{
+   result = FMOD::System_Create(&fmodSystem); // Create the Studio System object.
+   if (result != FMOD_OK)
+   {
+       printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+       exit(-1);
+   }
+
+   // Initialize FMOD Studio, which will also initialize FMOD Low Level
+   result = fmodSystem->init(512, FMOD_INIT_NORMAL, 0);
+   if (result != FMOD_OK)
+   {
+       printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+       exit(-1);
+   }
+
+   FMOD::ChannelGroup* channelMusic;
+   FMOD::ChannelGroup* channelEffects;
+   FMOD::Channel    *channel = 0;
+   
+   fmodSystem->createChannelGroup(NULL, &channelMusic);
+   fmodSystem->createChannelGroup(NULL, &channelEffects);
+
+   g_audio = Audio(fmodSystem, channelMusic, channelEffects, &eventQueue);
 }
 /*-----------------------------------------------*/
 static int whichBucket(int x, int y)
@@ -488,6 +457,11 @@ static void loadLevel()
 			level->startY = level->tileArray[index].y;
 		}
 	}
+   
+   //Event ev = Event(Event::ET_LEVEL_BEGIN);
+   Event ev = Event(Event::ET_LEVEL_BEGIN, "level", 1);
+   eventQueue.queueEvent(ev);
+   eventQueue.addEventListener(Event::ET_LEVEL_BEGIN, &g_audio);
 }
 /*-----------------------------------------------*/
 static void clearBackground()
@@ -578,6 +552,79 @@ static void reshape(const int w, const int h)
 	g_cam.updateResolution(w, h);
 }
 /*-----------------------------------------------*/
+void onRender(int* tick, int* prevTick, int ticksPerFrame)
+{
+   /*	PURPOSE:		Handles all graphics related calls once per SDL loop 
+   RECEIVES:	 
+   RETURNS:		 
+   REMARKS:		 
+   */
+
+	do 
+	{
+		// All draw calls go here
+		clearBackground();
+		g_level[g_currentLevel].drawLevel(g_cam.x, g_cam.y, g_windowOriginalWidth, g_windowOriginalHeight);
+		drawSprites();
+
+		// Timer updates
+		SDL_Delay( max( 0, ticksPerFrame - (*tick - *prevTick) ));
+		*tick = SDL_GetTicks();
+	} while( ticksPerFrame - (*tick - *prevTick) > 0 );
+	*prevTick = *tick;
+
+   SDL_GL_SwapWindow( g_window );
+}
+/*-----------------------------------------------*/
+void onPhysics(int tick, int* prevPhysicsTick, int ticksPerPhysics)
+{
+   /*	PURPOSE:		Handles all Physics related calls 
+   RECEIVES:	 
+   RETURNS:		 
+   REMARKS:		 
+   */
+
+	while( tick > *prevPhysicsTick + ticksPerPhysics ) 
+	{
+		// Update physics
+		keyboard();
+		chickenAI(ticksPerPhysics);
+		updateSprites(ticksPerPhysics);
+		player::updatePhysics(&g_player, ticksPerPhysics);
+
+		// Update Timers
+		*prevPhysicsTick += ticksPerPhysics;
+	}
+}
+/*-----------------------------------------------*/
+static void onLoop()
+{
+   /*	PURPOSE:		Handles all once per SDL loop calls 
+   RECEIVES:	 
+   RETURNS:		 
+   REMARKS:		 
+   */
+   
+   eventQueue.updateEventQueue();
+   fmodSystem->update();
+}
+/*-----------------------------------------------*/
+static void onInit()
+{
+   /*	PURPOSE:		Handles all initialization related calls 
+   RECEIVES:	 
+   RETURNS:		 
+   REMARKS:		 
+   */
+
+   init2D();
+	loadLevel();
+	initCamera();
+   initAudio();
+	initBuckets();
+	loadSprites();
+}
+/*-----------------------------------------------*/
 int main( void )
 {	
 	srand((unsigned int) time(NULL));
@@ -586,11 +633,7 @@ int main( void )
 	if (initSDL())
 		return 1;
 
-	init2D();
-	loadLevel();
-	initCamera();
-	initBuckets();
-	loadSprites();
+	onInit();
 
 	// Timers
 	int ticksPerFrame = 1000 / 60;
@@ -620,39 +663,15 @@ int main( void )
 				reshape(event.window.data1,event.window.data2);
 		}
 
-		// Game logic goes here
-		
-		// Graphics Code
 		int tick = SDL_GetTicks();
-		do 
-		{
-			// All draw calls go here
-			clearBackground();
-			g_level[g_currentLevel].drawLevel(g_cam.x, g_cam.y, g_windowOriginalWidth, g_windowOriginalHeight);
-			drawSprites();
 
-			// Timer updates
-			SDL_Delay( max( 0, ticksPerFrame - (tick - prevTick) ));
-			tick = SDL_GetTicks();
-		} while( ticksPerFrame - (tick - prevTick) > 0 );
-		prevTick = tick;
-		
-		// Physics Code
-		while( tick > prevPhysicsTick + ticksPerPhysics ) 
-		{
-			// Update physics
-			keyboard();
-			chickenAI(ticksPerPhysics);
-			updateSprites(ticksPerPhysics);
-			player::updatePhysics(&g_player, ticksPerPhysics);
-
-			// Update Timers
-			prevPhysicsTick += ticksPerPhysics;
-		}
-
-		SDL_GL_SwapWindow( g_window );
+		onRender(&tick, &prevTick, ticksPerFrame);
+		onPhysics(tick, &prevPhysicsTick, ticksPerPhysics);
+      onLoop();
 	}
 
 	SDL_Quit();
+   fmodSystem->close();
+   fmodSystem->release();
 	return 0;
 }
