@@ -20,10 +20,10 @@ EventQueue::~EventQueue(void)
 {
    eventQueue.clear();
    
-   /*unordered_map<Event::EventType, std::vector<EventListener*>>::iterator itr;
+   unordered_map<Event::EventType, std::vector<EventListener*>>::iterator itr;
    for (itr = listeners.begin(); itr != listeners.end(); itr++)
       itr->second.clear();
-   listeners.erase(listeners.begin(), listeners.end());*/
+   listeners.erase(listeners.begin(), listeners.end());
 }
 /*-----------------------------------------------*/
 void EventQueue::queueEvent(Event ev)

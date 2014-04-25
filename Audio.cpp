@@ -24,8 +24,7 @@ Audio::~Audio(void)
 void Audio::notify(Event* event)
 {
    // Do stuff
-   //float x = (*event).numParams["level"];
-   if (event->type == Event::ET_LEVEL_BEGIN)// && *event; //->numParams.find("level")->second == 0)
+   if (event->type == Event::ET_LEVEL_BEGIN && event->numParams.find("level")->second == 0)
    {
       Channel* channel;
       fmodSystem->playSound(bgMusic[0], channelMusic, false, &channel);

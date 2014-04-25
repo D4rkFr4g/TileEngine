@@ -459,7 +459,7 @@ static void loadLevel()
 		}
 	}
    
-   Event ev = Event(Event::ET_LEVEL_BEGIN, "level", 1);
+   Event ev = Event(Event::ET_LEVEL_BEGIN, "level", 0);
    eventQueue.queueEvent(ev);
 }
 /*-----------------------------------------------*/
